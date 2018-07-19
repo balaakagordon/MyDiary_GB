@@ -11,6 +11,10 @@
 			<br><br>
 		</div>
 		<div class="container container-home">
+			<br>
+				{% for message in get_flashed_messages() %}
+				{{ message }}
+			{% endfor %}
 			<h2 style="text-align: center;"><u>MyThoughts</u></h2>
 			<table id="entries">
 				<tr>

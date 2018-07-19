@@ -1,0 +1,4 @@
+[
+  "test_mydiary.py::Test_apis::test_get_all_entrie", 
+  "test_mydiary.py::Test_apis::test_get_one_entry"
+]

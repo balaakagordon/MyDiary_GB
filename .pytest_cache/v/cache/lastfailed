@@ -1,0 +1,4 @@
+{
+  "test_mydiary.py::Test_apis": true, 
+  "test_mydiary.py::Testapis::()::test_get_one_entry": true
+}

@@ -2,24 +2,24 @@
 <html>
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" type="text/css" href="style.css">	
+		<link rel="stylesheet" type="text/css" href="static/style.css">	
 	</head>
-	<body background="background6.jpg">
+	<body background="static/images/background6.jpg">
 		<div class="header">
 			<br><br>
-			<img style="text-align:center" src="diary_logo.png" alt="MyDiary" width="450" height=auto></img>
+			<img style="text-align:center" src="static/images/diary_logo.png" alt="MyDiary" width="450" height=auto></img>
 			<br><br>
 		</div>
-		<div class="container container-login">
-			<h1 style="text-align:center"><u>LogIn</u></h1>
-			<br>
-			<form>
+		<form action="" method="post">
+			<div class="container container-login">
+				<h1 style="text-align:center"><u>LogIn</u></h1>
+				<br>
 				<div class="row">
 					<div class="col col-40">
 						<label for="mail">E-mail</label>
 					</div>
 					<div class="col col-60">
-						<input type="text" id="mail" name="email" placeholder="your.name@email.com">
+						<input type="text" id="mail" name="email" placeholder="your.name@email.com" value="{{ request.form.email }}">
 					</div>
 				</div>	
 				<div class="row">
@@ -27,24 +27,27 @@
 						<label for="pword">Password</label>
 					</div>
 					<div class="col col-60">
-						<input type="password" id="pword" name="password" placeholder="">
+						<input type="password" id="pword" name="password" placeholder="" value="{{ request.form.password }}">
 					</div>
 				</div>
-			</form>
-			<br><br>
-		</div>
-		<div class="container-button">
-			<div class="col col-25">
-				<input type="submit" class="button-page" onclick="" value="Submit">
+				{% if error %}
+					<p class="error"><strong>Error:</strong> {{ error }}</p>
+				{% endif %}
+				<br><br>
 			</div>
-			<div class="col col-25">
+			<div class="container-button">
+				<div class="col col-25">
+					<input type="submit" class="button-page" onclick="location.href='/MyDiary_GB/templates/index.html'" value="LogIn">
+				</div>
+				<div class="col col-25">
+				</div>
+				<div class="col col-25">
+				</div>
+				<div>
+					<input type="button" class="button-page" onclick="location.href='/MyDiary_GB/templates/registeration.html'" value="SignUp">
+				</div>
 			</div>
-			<div class="col col-25">
-			</div>
-			<div class="col col-25">
-				<input type="button" class="button-page" onclick="" value="Back">
-			</div>
-		</div>
+		</form>
 		<div class="footer">
 			<p>Page by: Gordon Balaaka</p>
 		  	<p>App information.</p>
