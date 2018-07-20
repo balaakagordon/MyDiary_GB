@@ -6,10 +6,6 @@ from app import APP
 import pytest
 import unittest
 
-require 'coveralls'
-Coveralls.wear!
-
-
 
 """ This class holds all api tests  """
 class Test_apis(unittest.TestCase):
