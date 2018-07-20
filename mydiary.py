@@ -4,7 +4,7 @@ This module holds the app's datastructures and the different classes used
 
 # -*- coding: utf-8 -*-
 
-#importing packages 
+"""importing packages"""
 import datetime
 from random import randrange
 now = datetime.datetime.now()
@@ -103,10 +103,8 @@ to the entry list """
 class DiaryEntry:
     def __init__(self, entryList, data, currentTime=now):
         self.entryId = entryList.entryIndex
-        self.created = "".join(str(now.day)+"/"+str(now.month)\
-                        +"/"+str(now.year))
-        self.modified = "".join(str(now.day)+"/"+str(now.month)\
-                        +"/"+str(now.year))
+        self.created = "".join(str(now.day)+"/"+str(now.month)+"/"+str(now.year))
+        self.modified = "".join(str(now.day)+"/"+str(now.month)+"/"+str(now.year))
         self.entryList = entryList
         self.data = data
         self.entryList.createEntry(self)
@@ -128,17 +126,12 @@ class DiaryEntry:
 
 def main():
     mydiaryobject = MyDiary()
-    gordonbalaaka = User("Gordon Balaaka", "balaakagordon@gmail.com", \
-                    "password", mydiaryobject)
-    seconduser = User("Peter Crouch", "petercrouch@gmail.com", \
-                    "password", mydiaryobject)
-    jamesbond = User("James Bond", "007.amesbond@gmail.com", \
-                    "bondjamesbond", mydiaryobject)   
+    gordonbalaaka = User("Gordon Balaaka", "balaakagordon@gmail.com", "password", mydiaryobject)
+    seconduser = User("Peter Crouch", "petercrouch@gmail.com", "password", mydiaryobject)
+    jamesbond = User("James Bond", "007.amesbond@gmail.com", "bondjamesbond", mydiaryobject)   
     mydiaryobject.login("balaakagordon@gmail.com","password")
-    entry1 = DiaryEntry(entryList=mydiaryobject.userEntries, \
-            data='this is my first entry', currentTime=now)
-    entry2 = DiaryEntry(entryList=mydiaryobject.userEntries, \
-            data='this is my second entry', currentTime=now)
+    entry1 = DiaryEntry(entryList=mydiaryobject.userEntries, data='this is my first entry', currentTime=now)
+    entry2 = DiaryEntry(entryList=mydiaryobject.userEntries, data='this is my second entry', currentTime=now)
 
 if __name__ == '__main__':
     main()    

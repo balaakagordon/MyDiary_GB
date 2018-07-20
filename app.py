@@ -1,8 +1,8 @@
 """
-API endpoints are defined in this file
+api endpoints are defined in this file
 """
 
-from flask import Flask, request, jsonify, abort, make_response
+from flask import Flask, render_template, request, jsonify, abort, make_response
 from flask_restful import Resource, Api
 import datetime
 import mydiary
@@ -12,9 +12,14 @@ from mydiary import DiaryEntry
 
 #app = Flask(__name__)
 app = Flask(__name__)
-API = Api(app)
+api = Api(app)
 NOW = datetime.datetime.now()
 
+
+
+@app.route('/')
+def home():
+    return render_template('index.html')  # render a template
 
 """ this route returns a single diary entry """
 @app.route('/home/api/v1/entries/<int:entry_id>', methods=['GET'])
@@ -42,7 +47,7 @@ def get_all_entries():
     return jsonify([{'entrylist': entrylist[:]}])
 
 """ this route adds single diary entry """
-@app.route('/home/API/v1/entries', methods=['POST'])
+@app.route('/home/api/v1/entries', methods=['POST'])
 def create_entry():
     """ this method creates a new entry """
 
@@ -60,7 +65,7 @@ def create_entry():
     return jsonify({'entry': entry})
 
 """ this route updates a single diary entry """
-@app.route('/home/API/v1/entries/<int:entry_id>', methods=['PUT'])
+@app.route('/home/api/v1/entries/<int:entry_id>', methods=['PUT'])
 def update_task(entry_id):
     """ this method updates an entry's data """
 
@@ -78,7 +83,7 @@ def update_task(entry_id):
     return jsonify({'entry': entry})
 
 """ this route deletes a diary entry """
-@app.route('/home/API/v1/entries/<int:entry_id>', methods=['DELETE'])
+@app.route('/home/api/v1/entries/<int:entry_id>', methods=['DELETE'])
 def delete_entry(entry_id):
     """ this method deletes an entry """
 
