@@ -17,22 +17,21 @@ NOW = datetime.datetime.now()
 
 
 """ this route returns a single diary entry """
-@app.route('/home/API/v1/entries/<int:entry_id>', methods=['GET'])
+@app.route('/home/api/v1/entries/<int:entry_id>', methods=['GET'])
 def get_entry(entry_id):
     """ this method outputs one entry """
 
     entry = [entry for entry in mydiaryobject.userEntries.entrylist if entry.entryId == entry_id]
     entry = {'id': entry[0].entryId, 'entrydata': entry[0].data, 'datecreated': entry[0].created}
-    if len(entry) == 0: #or entry[0].entryId == None:
+    if entry == []: #or entry[0].entryId == None:
         abort(404)
     return jsonify({'entry': entry})
 
 """ this route returns all diary entries """
-@app.route('/home/API/v1/entries', methods=['GET'])
+@app.route('/home/api/v1/entries', methods=['GET'])
 def get_all_entries():
     """ this method outputs all entries """
 
-    #if len(mydiaryobject.userEntries.entrylist) == 0:
     if len(mydiaryobject.userEntries.entrylist) == 0:
         abort(404)
 
@@ -40,7 +39,6 @@ def get_all_entries():
     for entry in mydiaryobject.userEntries.entrylist:
         entry = {'id': entry.entryId, 'entrydata': entry.data, 'datecreated': entry.created}
         entrylist.append(entry)
-
     return jsonify([{'entrylist': entrylist[:]}])
 
 """ this route adds single diary entry """
@@ -86,7 +84,7 @@ def delete_entry(entry_id):
 
     entry_list = [entry for entry in mydiaryobject.userEntries.entrylist \
     if entry.entryId == entry_id]
-    if len(entry_list) == 0:
+    if entry_list == []:
         abort(404)
     mydiaryobject.userEntries.entrylist.remove(entry_list[0])
     return jsonify({'result': True})
@@ -94,7 +92,6 @@ def delete_entry(entry_id):
 @app.errorhandler(404)
 def not_found(error):
     """ error handler gives more friendly errors """
-
     return make_response(jsonify({'error': 'Not found'}), 404)
 
 mydiaryobject = mydiary.MyDiary()

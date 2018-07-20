@@ -108,8 +108,6 @@ class Test_apis(unittest.TestCase):
                             content_type='application/json')
                 self.assertNotIn('Delete test', response3.data)
 
-def cov():
-    cov = coverage.coverage(branch=True)
 
 if __name__ == '__main__':
     unittest.main()
