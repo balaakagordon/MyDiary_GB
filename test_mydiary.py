@@ -2,7 +2,7 @@
 This module contains the tests for the apis
 """
 
-from app import APP
+from app import app
 import pytest
 import unittest
 
@@ -11,21 +11,21 @@ import unittest
 class Test_apis(unittest.TestCase):
     """ a test for the data returned by the get method and an index """
     def test_get_one_entry_data(self):
-        tester = APP.test_client(self)
+        tester = app.test_client(self)
         response = tester.get('http://localhost:5000/home/API/v1/entries/2', \
                     content_type='application/json')
         self.assertIn('this is my second entry', response.data)
 
     """ a test for the status code returned by the get method and an index """
     def test_get_one_entry_status_code(self):
-        tester = APP.test_client(self)
+        tester = app.test_client(self)
         response = tester.get('http://localhost:5000/home/API/v1/entries/2', \
                     content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
     """ a test for the data returned by the get method and no entry index """
     def test_get_all_entries_data(self):
-        tester = APP.test_client(self)
+        tester = app.test_client(self)
         response = tester.get('http://localhost:5000/home/API/v1/entries', \
                     content_type='application/json')
         self.assertIn('this is my first entry', response.data)
@@ -33,14 +33,14 @@ class Test_apis(unittest.TestCase):
 
     """ a test for the status code returned by the get method and no entry index """
     def test_get_all_entries_status_code(self):
-        tester = APP.test_client(self)
+        tester = app.test_client(self)
         response = tester.get('http://localhost:5000/home/API/v1/entries', \
                     content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
     """ a test for the status code returned by the post method """
     def test_add_new_entry_status_code(self):
-        tester = APP.test_client(self)
+        tester = app.test_client(self)
         response = tester.post('http://localhost:5000/home/API/v1/entries', \
                     data='{"entrydata":"New entry data for post test"}', \
                     content_type='application/json')
@@ -48,7 +48,7 @@ class Test_apis(unittest.TestCase):
 
     """ a test for the data returned by the post method """
     def test_add_new_entry_data(self):
-        tester = APP.test_client(self)
+        tester = app.test_client(self)
         response1 = tester.post('http://localhost:5000/home/API/v1/entries', \
                     data='{"entrydata":"New entry data for post test"}', \
                     content_type='application/json')
@@ -58,7 +58,7 @@ class Test_apis(unittest.TestCase):
 
     """ a test for the status code returned by the put method """
     def test_update_entry_status_code(self):
-        tester = APP.test_client(self)
+        tester = app.test_client(self)
         response = tester.put('http://localhost:5000/home/API/v1/entries/2', \
                     data='{"entrydata":"New entry data for put test"}', \
                     content_type='application/json')
@@ -66,7 +66,7 @@ class Test_apis(unittest.TestCase):
 
     """ a test for the data returned by the put method """
     def test_update_entry_data(self):
-        tester = APP.test_client(self)
+        tester = app.test_client(self)
         response = tester.post('http://localhost:5000/home/API/v1/entries', \
                     data='{"entrydata":"test data"}', content_type='application/json')
         response = tester.put('http://localhost:5000/home/API/v1/entries/1', \
@@ -76,7 +76,7 @@ class Test_apis(unittest.TestCase):
 
     """ a test for the status code returned when an entry is deleted """
     def test_delete_entry_status_code(self):
-        tester = APP.test_client(self)
+        tester = app.test_client(self)
         response = tester.post('http://localhost:5000/home/API/v1/entries', \
                     data='{"entrydata":"Delete test"}', content_type='application/json')
         response1 = tester.get('http://localhost:5000/home/API/v1/entries', \
@@ -93,7 +93,7 @@ class Test_apis(unittest.TestCase):
 
     """ a test for the data returned when an entry is deleted """
     def test_delete_entry_data(self):
-        tester = APP.test_client(self)
+        tester = app.test_client(self)
         response = tester.post('http://localhost:5000/home/API/v1/entries', \
                     data='{"entrydata":"Delete test"}', content_type='application/json')
         response1 = tester.get('http://localhost:5000/home/API/v1/entries', \
@@ -107,6 +107,9 @@ class Test_apis(unittest.TestCase):
                 response3 = tester.get('http://localhost:5000/home/API/v1/entries', \
                             content_type='application/json')
                 self.assertNotIn('Delete test', response3.data)
+
+def cov():
+    cov = coverage.coverage(branch=True)
 
 if __name__ == '__main__':
     unittest.main()

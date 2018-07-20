@@ -11,29 +11,29 @@ from mydiary import DiaryEntry
 
 
 #app = Flask(__name__)
-APP = Flask(__name__)
-API = Api(APP)
+app = Flask(__name__)
+API = Api(app)
 NOW = datetime.datetime.now()
 
 
 """ this route returns a single diary entry """
-@APP.route('/home/API/v1/entries/<int:entry_id>', methods=['GET'])
+@app.route('/home/API/v1/entries/<int:entry_id>', methods=['GET'])
 def get_entry(entry_id):
     """ this method outputs one entry """
 
     entry = [entry for entry in mydiaryobject.userEntries.entrylist if entry.entryId == entry_id]
     entry = {'id': entry[0].entryId, 'entrydata': entry[0].data, 'datecreated': entry[0].created}
-    if entry == []: #or entry[0].entryId == None:
+    if len(entry) == 0: #or entry[0].entryId == None:
         abort(404)
     return jsonify({'entry': entry})
 
 """ this route returns all diary entries """
-@APP.route('/home/API/v1/entries', methods=['GET'])
+@app.route('/home/API/v1/entries', methods=['GET'])
 def get_all_entries():
     """ this method outputs all entries """
 
     #if len(mydiaryobject.userEntries.entrylist) == 0:
-    if mydiaryobject.userEntries.entrylist == []:
+    if len(mydiaryobject.userEntries.entrylist) == 0:
         abort(404)
 
     entrylist = []
@@ -44,7 +44,7 @@ def get_all_entries():
     return jsonify([{'entrylist': entrylist[:]}])
 
 """ this route adds single diary entry """
-@APP.route('/home/API/v1/entries', methods=['POST'])
+@app.route('/home/API/v1/entries', methods=['POST'])
 def create_entry():
     """ this method creates a new entry """
 
@@ -62,12 +62,12 @@ def create_entry():
     return jsonify({'entry': entry})
 
 """ this route updates a single diary entry """
-@APP.route('/home/API/v1/entries/<int:entry_id>', methods=['PUT'])
+@app.route('/home/API/v1/entries/<int:entry_id>', methods=['PUT'])
 def update_task(entry_id):
     """ this method updates an entry's data """
 
     entry = [entry for entry in mydiaryobject.userEntries.entrylist if entry.entryId == entry_id]
-    if entry == []:
+    if len(entry) == 0:
         abort(404)
     if not request.json:
         abort(400)
@@ -80,21 +80,21 @@ def update_task(entry_id):
     return jsonify({'entry': entry})
 
 """ this route deletes a diary entry """
-@APP.route('/home/API/v1/entries/<int:entry_id>', methods=['DELETE'])
+@app.route('/home/API/v1/entries/<int:entry_id>', methods=['DELETE'])
 def delete_entry(entry_id):
     """ this method deletes an entry """
 
     entry_list = [entry for entry in mydiaryobject.userEntries.entrylist \
     if entry.entryId == entry_id]
-    if entry_list == []:
+    if len(entry_list) == 0:
         abort(404)
     mydiaryobject.userEntries.entrylist.remove(entry_list[0])
     return jsonify({'result': True})
 
-@APP.errorhandler(404)
+@app.errorhandler(404)
 def not_found(error):
     """ error handler gives more friendly errors """
-    
+
     return make_response(jsonify({'error': 'Not found'}), 404)
 
 mydiaryobject = mydiary.MyDiary()
@@ -111,4 +111,4 @@ entry2 = DiaryEntry(entryList=mydiaryobject.userEntries, \
 
 
 if __name__ == '__main__':
-    APP.run(debug=True)
+    app.run(debug=True)
