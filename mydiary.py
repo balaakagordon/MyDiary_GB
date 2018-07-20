@@ -1,3 +1,7 @@
+"""
+This module holds the app's datastructures and the different classes used
+"""
+
 # -*- coding: utf-8 -*-
 
 #importing packages 
@@ -5,7 +9,8 @@ import datetime
 from random import randrange
 now = datetime.datetime.now()
 
-
+""" the diary app is modelled as an object with it's own \
+parameters and methods """
 class MyDiary:
     def __init__(self):
         self.userlist = {}
@@ -13,12 +18,16 @@ class MyDiary:
         self.userEntries = None
     
     def addUser(self, user):
+        """ User must be able to register """
+
         if user in list(self.userlist.values()): 
             return "User already exists"
         else:
             self.userlist[user.email] = user
         
     def login(self, loginEmail, loginPassword):
+        """ login method requires a username and password """
+
         if self.userlist[loginEmail].password == loginPassword:
             self.currentUser = self.userlist.get(loginEmail)
             self.userEntries = self.currentUser.entries
@@ -26,6 +35,9 @@ class MyDiary:
             print("incorrect login credentials")
     
     def logout(self):
+        """ logout method clears the currentUser and userEntries \
+        variables """
+
         if self.currentUser != None:
             self.currentUser = None
             self.userEntries = None
@@ -34,6 +46,8 @@ class MyDiary:
 
 
 class User:
+    """ All information about a user is stored in the User object """
+
     def __init__(self, name, email, password, mydiaryobject):
         #self.userId = rand()
         self.name = name
@@ -46,8 +60,10 @@ class User:
         user_details = [self.name, " ", self.email, " ", self.password]
         return "". join(user_details)
         
+class Entries:
+    """ Entry lists for each user are modelled as objects with \
+    parameters and methods """
 
-class Entries:  
     def __init__(self):
         self.entryIndex = 1
         self.entrylist = []
@@ -56,25 +72,34 @@ class Entries:
         self.currentEntries = None
         
     def createEntry(self, DiaryEntry):
+        """ once a diary entry is created it sends itself to \
+        Entries to be added to entrylist """
+
         self.entrylist.append(DiaryEntry)
         self.entryIndex += 1
         
     def modifyEntry(self, DiaryEntry):
+        """ this method edits diary entries """
+
         for i in range(len(self.entrylist)-1):
             if self.entrylist[i].entryId == DiaryEntry.entryId:
                 self.entrylist[i]=DiaryEntry 
     
     def deleteEntry(self, DiaryEntry):
+        """ this method deletes diary entries """
+
         if DiaryEntry in list(self.entrylist):
             self.entrylist.pop(DiaryEntry.entryId)
     
     def __str__(self):
+        """ this method displays a diary entry as a string """
         entrystring = ""
         for entry in self.entrylist:
             entrystring = entrystring + entry.data +  " "  
         return entrystring
 
-
+""" A DiaryEntry is stored as an object and it adds itself \
+to the entry list """
 class DiaryEntry:
     def __init__(self, entryList, data, currentTime=now):
         self.entryId = entryList.entryIndex
@@ -88,6 +113,8 @@ class DiaryEntry:
 
         
     def edit(self, entryContent, currentTime=now):
+        """ this method edits diary entry's data """
+
         self.data = entryContent
         self. modified = currentTime
         self.entryList.modifyEntry(self)
@@ -101,12 +128,17 @@ class DiaryEntry:
 
 def main():
     mydiaryobject = MyDiary()
-    gordonbalaaka = User("Gordon Balaaka","balaakagordon@gmail.com","password",mydiaryobject)
-    seconduser = User("Peter Crouch","petercrouch@gmail.com","password",mydiaryobject)
-    jamesbond = User("James Bond","007.amesbond@gmail.com","bondjamesbond",mydiaryobject)   
+    gordonbalaaka = User("Gordon Balaaka", "balaakagordon@gmail.com", \
+                    "password", mydiaryobject)
+    seconduser = User("Peter Crouch", "petercrouch@gmail.com", \
+                    "password", mydiaryobject)
+    jamesbond = User("James Bond", "007.amesbond@gmail.com", \
+                    "bondjamesbond", mydiaryobject)   
     mydiaryobject.login("balaakagordon@gmail.com","password")
-    entry1 = DiaryEntry(entryList=mydiaryobject.userEntries, data='this is my first entry', currentTime=now)
-    entry2 = DiaryEntry(entryList=mydiaryobject.userEntries, data='this is my second entry', currentTime=now)
+    entry1 = DiaryEntry(entryList=mydiaryobject.userEntries, \
+            data='this is my first entry', currentTime=now)
+    entry2 = DiaryEntry(entryList=mydiaryobject.userEntries, \
+            data='this is my second entry', currentTime=now)
 
 if __name__ == '__main__':
     main()    
