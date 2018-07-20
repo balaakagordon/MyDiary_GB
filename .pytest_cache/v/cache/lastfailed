@@ -1,4 +1,8 @@
 {
-  "test_mydiary.py::Test_apis": true, 
+  "test_mydiary.py::Test_apis::test_add_new_entry_data": true, 
+  "test_mydiary.py::Test_apis::test_delete_entry_data": true, 
+  "test_mydiary.py::Test_apis::test_delete_entry_status_code": true, 
+  "test_mydiary.py::Test_apis::test_get_all_entries_data": true, 
+  "test_mydiary.py::Test_apis::test_update_entry_data": true, 
   "test_mydiary.py::Testapis::()::test_get_one_entry": true
 }

@@ -1,60 +1,54 @@
 from flask import Flask, request, jsonify, abort, make_response
 from flask_restful import Resource, Api
 import datetime
+import mydiary
+from mydiary import DiaryEntry
+
 
 
 app = Flask(__name__)
 api = Api(app)
 now = datetime.datetime.now()
-##app.config['SECRET_KEY'] = "my precious"
-
-
-entries = [
-    {
-        'id': 1,
-        'entrydata': u'Milk, Cheese, Pizza, Fruit, Tylenol', 
-        'datecreted': "".join(str(now.day)+"/"+str(now.month)\
-                        +"/"+str(now.year))
-    },
-    {
-        'id': 2,
-        'entrydata': u'Need to find a good Python tutorial on the web', 
-        'datecreated': "".join(str(now.day)+"/"+str(now.month)\
-                        +"/"+str(now.year))
-    }
-]
 
 
 @app.route('/home/api/v1/entries/<int:entry_id>', methods=['GET'])
 def get_entry(entry_id):
-    entry = [entry for entry in entries if entry['id'] == entry_id]
-    if len(entry) == 0:
+    entry = [entry for entry in mydiaryobject.userEntries.entrylist if entry.entryId == entry_id]
+    entry = {'id': entry[0].entryId, 'entrydata': entry[0].data, 'datecreated': entry[0].created}
+    if len(entry) == 0: #or entry[0].entryId == None:
         abort(404)
-    return jsonify({'entry': entry[0]})
+    return jsonify({'entry': entry})
 
 @app.route('/home/api/v1/entries', methods=['GET'])
 def get_all_entries():
-    entrylist = [entry for entry in entries]
-    if len(entry) == 0:
+    if len(mydiaryobject.userEntries.entrylist) == 0:
         abort(404)
+
+    entrylist = []
+    for entry in mydiaryobject.userEntries.entrylist:
+        entry = {'id': entry.entryId, 'entrydata': entry.data, 'datecreated': entry.created}
+        entrylist.append(entry)
+
     return jsonify([{'entrylist': entrylist[:]}])
 
 @app.route('/home/api/v1/entries', methods=['POST'])
 def create_entry():
     if not request.json or not 'entrydata' in request.json:
         abort(400)
+    
+    entry = mydiaryobject.userEntries.createEntry
+    new_entry = DiaryEntry(entryList=mydiaryobject.userEntries, data=request.json.get('entrydata', ""), currentTime="".join(str(now.day)+"/"+str(now.month)\
+                        +"/"+str(now.year)))
     entry = {
-        'id': entries[-1]['id'] + 1,
-        'entrydata': request.json.get('entrydata', ""),
-        'datecreated': "".join(str(now.day)+"/"+str(now.month)\
-                        +"/"+str(now.year))
+        'id': new_entry.entryId,
+        'entrydata': new_entry.data,
+        'datecreated': new_entry.created
     }
-    entries.append(entry)
     return jsonify({'entry': entry})
 
 @app.route('/home/api/v1/entries/<int:entry_id>', methods=['PUT'])
 def update_task(entry_id):
-    entry = [entry for entry in entries if entry['id'] == entry_id]
+    entry = [entry for entry in mydiaryobject.userEntries.entrylist if entry.entryId == entry_id]
     if len(entry) == 0:
         abort(404)
     if not request.json:
@@ -63,21 +57,31 @@ def update_task(entry_id):
         abort(400)
     if 'date' in request.json and type(request.json['date']) is not int:
         abort(400)
-    entry[0]['entrydata'] = request.json.get('entrydata', entry[0]['entrydata'])
-    entry[0]['datecreated'] = request.json.get('datecreated', entry[0]['datecreated'])
-    return jsonify({'entry': entry[0]})
+    entry[0].data = request.json.get('entrydata', "")
+    entry = {'id': entry[0].entryId, 'entrydata': entry[0].data, 'datecreated': entry[0].created}
+    return jsonify({'entry': entry})
 
 @app.route('/home/api/v1/entries/<int:entry_id>', methods=['DELETE'])
 def delete_entry(entry_id):
-    entry = [entry for entry in entries if entry['id'] == entry_id]
-    if len(entry) == 0:
+    entry_list = [entry for entry in mydiaryobject.userEntries.entrylist if entry.entryId == entry_id]
+    if len(entry_list) == 0:
         abort(404)
-    entries.remove(entry[0])
+    mydiaryobject.userEntries.entrylist.remove(entry_list[0])
     return jsonify({'result': True})
 
 @app.errorhandler(404)
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
+
+mydiaryobject = mydiary.MyDiary()
+gordonbalaaka = mydiary.User("Gordon Balaaka","balaakagordon@gmail.com","password",mydiaryobject)
+seconduser = mydiary.User("Peter Crouch","petercrouch@gmail.com","password",mydiaryobject)
+jamesbond = mydiary.User("James Bond","007.amesbond@gmail.com","bondjamesbond",mydiaryobject)   
+mydiaryobject.login("balaakagordon@gmail.com","password")
+entry1 = DiaryEntry(entryList=mydiaryobject.userEntries, data='this is my first entry', currentTime="".join(str(now.day)+"/"+str(now.month)\
+                        +"/"+str(now.year)))
+entry2 = DiaryEntry(entryList=mydiaryobject.userEntries, data='this is my second entry', currentTime="".join(str(now.day)+"/"+str(now.month)\
+                        +"/"+str(now.year)))
 
 
 if __name__ == '__main__':

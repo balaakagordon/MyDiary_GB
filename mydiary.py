@@ -47,15 +47,17 @@ class User:
         return "". join(user_details)
         
 
-class Entries:
+class Entries:  
     def __init__(self):
+        self.entryIndex = 1
         self.entrylist = []
         self.allEntries = None
         self.deletedEntries = None
         self.currentEntries = None
         
-    def createEntry(self, DiaryEntry, entryId=len(mydiaryobject.entries.entrylist[-1])+1, mydiaryobject=mydiaryobject, currentTime=now):
+    def createEntry(self, DiaryEntry):
         self.entrylist.append(DiaryEntry)
+        self.entryIndex += 1
         
     def modifyEntry(self, DiaryEntry):
         for i in range(len(self.entrylist)-1):
@@ -63,7 +65,7 @@ class Entries:
                 self.entrylist[i]=DiaryEntry 
     
     def deleteEntry(self, DiaryEntry):
-        if DiaryEntry in list(self.entrylist.getvalues()):
+        if DiaryEntry in list(self.entrylist):
             self.entrylist.pop(DiaryEntry.entryId)
     
     def __str__(self):
@@ -74,26 +76,27 @@ class Entries:
 
 
 class DiaryEntry:
-    def __init__(self, entryList, entryId, currentTime=now):
-        self.entryId = randrange(1000, 9999, 1)
-        self.entryId = entryId
-        self.created = currentTime
-        self.modified = currentTime
+    def __init__(self, entryList, data, currentTime=now):
+        self.entryId = entryList.entryIndex
+        self.created = "".join(str(now.day)+"/"+str(now.month)\
+                        +"/"+str(now.year))
+        self.modified = "".join(str(now.day)+"/"+str(now.month)\
+                        +"/"+str(now.year))
         self.entryList = entryList
-        self.data = "this is diary entry number "+self.entryId+"."
-        #self.data = raw_input("Please write your thought here:")
+        self.data = data
         self.entryList.createEntry(self)
+
         
     def edit(self, entryContent, currentTime=now):
         self.data = entryContent
         self. modified = currentTime
         self.entryList.modifyEntry(self)
         
-    def viewEntry(self):
-        entryDetails = ["content: ", self.data, "... date created: " , \
-                        "".join(str(self.created.day)+"/"+str(self.created.month)\
-                        +"/"+str(self.created.year))]
-        return "".join(entryDetails)
+    #def viewEntry(self):
+        #entryDetails = ["entrydata: ", self.data, "... datecreated: " , \
+                        #"".join(str(self.created.day)+"/"+str(self.created.month)\
+                        #+"/"+str(self.created.year))]
+        #return "".join(entryDetails)
 
 
 def main():
@@ -102,8 +105,8 @@ def main():
     seconduser = User("Peter Crouch","petercrouch@gmail.com","password",mydiaryobject)
     jamesbond = User("James Bond","007.amesbond@gmail.com","bondjamesbond",mydiaryobject)   
     mydiaryobject.login("balaakagordon@gmail.com","password")
-    entry1 = DiaryEntry(mydiaryobject.userEntries)
-    entry2 = DiaryEntry(mydiaryobject.userEntries)
+    entry1 = DiaryEntry(entryList=mydiaryobject.userEntries, data='this is my first entry', currentTime=now)
+    entry2 = DiaryEntry(entryList=mydiaryobject.userEntries, data='this is my second entry', currentTime=now)
 
 if __name__ == '__main__':
     main()    
