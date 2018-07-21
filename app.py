@@ -43,9 +43,7 @@ def login():
 
 """ this route logs the user out """
 @app.route('/logout')
-@login_required
 def logout():
-    session.pop('logged_in', None)
     flash('You were logged out.')
     return redirect(url_for('welcome'))
 
