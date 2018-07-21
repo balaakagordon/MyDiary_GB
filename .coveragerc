@@ -1,0 +1,9 @@
+[report]
+omit =
+    */python/*
+    */werkzeug/*
+    */jinja2/*
+    */flask/*
+    */markupsafe/*
+    */venv/*
+    */.vscode/*

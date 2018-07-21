@@ -2,7 +2,9 @@
 api endpoints are defined in this file
 """
 
-from flask import Flask, render_template, request, jsonify, abort, make_response
+from flask import Flask, render_template, request, \
+    jsonify, abort, make_response, request, url_for, \
+    flash, redirect
 from flask_restful import Resource, Api
 import datetime
 import mydiary
@@ -16,10 +18,37 @@ api = Api(app)
 NOW = datetime.datetime.now()
 
 
-
+""" this route links to the welcome page """
 @app.route('/')
+def welcome():
+    return render_template('index.html')
+
+""" this route links to the home page """
+@app.route('/home')
 def home():
-    return render_template('index.html')  # render a template
+    return render_template('index.html')
+
+""" this route links to the login page """
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        if (request.form['username'] != 'admin') \
+                or request.form['password'] != 'admin':
+            error = "Invalid Credentials"
+        else:
+            flash('You were logged in.')
+            return redirect(url_for('home'))
+    return render_template('login.html', error=error)
+
+""" this route logs the user out """
+@app.route('/logout')
+@login_required
+def logout():
+    session.pop('logged_in', None)
+    flash('You were logged out.')
+    return redirect(url_for('welcome'))
+
 
 """ this route returns a single diary entry """
 @app.route('/home/api/v1/entries/<int:entry_id>', methods=['GET'])
