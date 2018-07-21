@@ -11,6 +11,6 @@ install:
   - pip install coverage
 
 script:
-  - pytest with coverage
+  - pytest
 after_success:
   - coveralls
