@@ -9,4 +9,5 @@ sudo: required
   - pip install pytest
 script:
   - pytest
-
+after_success:
+  - coveralls
