@@ -11,8 +11,6 @@ import mydiary
 from mydiary import DiaryEntry
 
 
-
-#app = Flask(__name__)
 app = Flask(__name__)
 api = Api(app)
 NOW = datetime.datetime.now()
@@ -33,8 +31,8 @@ def home():
 def login():
     error = None
     if request.method == 'POST':
-        if (request.form['username'] != 'admin') \
-                or request.form['password'] != 'admin':
+        if (request.form['username'] != 'admin') or \
+            request.form['password'] != 'admin':
             error = "Invalid Credentials"
         else:
             flash('You were logged in.')
@@ -49,94 +47,116 @@ def logout():
 
 
 """ this route returns a single diary entry """
-@app.route('/home/api/v1/entries/<int:entry_id>', methods=['GET'])
-def get_entry(entry_id):
+@app.route('/home/api/v1/entries/<int:diary_entry_id>', methods=['GET'])
+def get_entry(diary_entry_id):
     """ this method outputs one entry """
-
-    entry = [entry for entry in mydiaryobject.userEntries.entrylist if entry.entryId == entry_id]
-    entry = {'id': entry[0].entryId, 'entrydata': entry[0].data, 'datecreated': entry[0].created}
-    if entry == []: #or entry[0].entryId == None:
+    diary_entry_list = [entry for entry in \
+                my_diary_object.user_entries.entry_list if \
+                entry.entry_id == diary_entry_id]
+    entry = {'id':diary_entry_list[0].entry_id, \
+                'entrydata':diary_entry_list[0].data, \
+                'datecreated':diary_entry_list[0].created}
+    if diary_entry_list == []:
         abort(404)
-    return jsonify({'entry': entry})
+    return jsonify({'entry':entry})
 
 """ this route returns all diary entries """
 @app.route('/home/api/v1/entries', methods=['GET'])
 def get_all_entries():
     """ this method outputs all entries """
-
-    if len(mydiaryobject.userEntries.entrylist) == 0:
+    if len(my_diary_object.user_entries.entry_list) == 0:
         abort(404)
-
-    entrylist = []
-    for entry in mydiaryobject.userEntries.entrylist:
-        entry = {'id': entry.entryId, 'entrydata': entry.data, 'datecreated': entry.created}
-        entrylist.append(entry)
-    return jsonify([{'entrylist': entrylist[:]}])
+    diary_entry_list = []
+    for entry in my_diary_object.user_entries.entry_list:
+        entry = {
+            'id':entry.entry_id, 
+            'entrydata':entry.data, 
+            'datecreated':entry.created
+        }
+        diary_entry_list.append(entry)
+    return jsonify([{'entrylist':diary_entry_list[:]}])
 
 """ this route adds single diary entry """
 @app.route('/home/api/v1/entries', methods=['POST'])
 def create_entry():
     """ this method creates a new entry """
-
     if not request.json or not 'entrydata' in request.json:
         abort(400)
-    entry = mydiaryobject.userEntries.createEntry
-    new_entry = DiaryEntry(entryList=mydiaryobject.userEntries, \
-    data=request.json.get('entrydata', ""), currentTime="".join(str(NOW.day)\
-    +"/"+str(NOW.month)+"/"+str(NOW.year)))
+    entry = my_diary_object.user_entries.createEntry
+    new_entry = DiaryEntry(entry_list=my_diary_object.user_entries, \
+                data=request.json.get('entrydata', ""), \
+                current_time="".join(str(NOW.day)+"/"+str(NOW.month)\
+                +"/"+str(NOW.year)))
     entry = {
-        'id': new_entry.entryId,
-        'entrydata': new_entry.data,
-        'datecreated': new_entry.created
+        'id': new_entry.entry_id,
+        'entrydata':new_entry.data,
+        'datecreated':new_entry.created
     }
     return jsonify({'entry': entry})
 
 """ this route updates a single diary entry """
-@app.route('/home/api/v1/entries/<int:entry_id>', methods=['PUT'])
-def update_task(entry_id):
+@app.route('/home/api/v1/entries/<int:diary_entry_id>', \
+                methods=['PUT'])
+def update_task(diary_entry_id):
     """ this method updates an entry's data """
-
-    entry = [entry for entry in mydiaryobject.userEntries.entrylist if entry.entryId == entry_id]
-    if len(entry) == 0:
+    diary_entry_list = [entry for entry in \
+                my_diary_object.user_entries.entry_list if \
+                entry.entry_id == diary_entry_id]
+    if len(diary_entry_list) == 0:
         abort(404)
     if not request.json:
         abort(400)
-    if 'description' in request.json and type(request.json['description']) is not unicode:
+    if 'entrydata' in request.json and \
+                type(request.json['entrydata']) is not unicode:
         abort(400)
-    if 'date' in request.json and type(request.json['date']) is not int:
+    if 'date' in request.json and type(request.json['date']) is not str:
         abort(400)
-    entry[0].data = request.json.get('entrydata', "")
-    entry = {'id': entry[0].entryId, 'entrydata': entry[0].data, 'datecreated': entry[0].created}
-    return jsonify({'entry': entry})
+    diary_entry_list[0].data = request.json.get('entrydata', "")
+    entry = {'id': diary_entry_list[0].entry_id, \
+                'entrydata':diary_entry_list[0].data, \
+                'datecreated':diary_entry_list[0].created}
+    return jsonify({'entry':entry})
 
 """ this route deletes a diary entry """
-@app.route('/home/api/v1/entries/<int:entry_id>', methods=['DELETE'])
-def delete_entry(entry_id):
+@app.route('/home/api/v1/entries/<int:diary_entry_id>', methods=['DELETE'])
+def delete_entry(diary_entry_id):
     """ this method deletes an entry """
-
-    entry_list = [entry for entry in mydiaryobject.userEntries.entrylist \
-    if entry.entryId == entry_id]
-    if entry_list == []:
+    diary_entry_list = [entry for entry in \
+                my_diary_object.user_entries.entry_list if \
+                entry.entry_id == diary_entry_id]
+    if diary_entry_list == []:
         abort(404)
-    mydiaryobject.userEntries.entrylist.remove(entry_list[0])
-    return jsonify({'result': True})
+    my_diary_object.user_entries.entry_list.remove(diary_entry_list[0])
+    return jsonify({'result':True})
 
 @app.errorhandler(404)
 def not_found(error):
     """ error handler gives more friendly errors """
     return make_response(jsonify({'error': 'Not found'}), 404)
 
-mydiaryobject = mydiary.MyDiary()
-gordonbalaaka = mydiary.User("Gordon Balaaka", "balaakagordon@gmail.com", "password", mydiaryobject)
-seconduser = mydiary.User("Peter Crouch", "petercrouch@gmail.com", "password", mydiaryobject)
-jamesbond = mydiary.User("James Bond", "007.amesbond@gmail.com", "bondjamesbond", mydiaryobject)
-mydiaryobject.login("balaakagordon@gmail.com", "password")
-entry1 = DiaryEntry(entryList=mydiaryobject.userEntries, \
-        data='this is my first entry', currentTime="".join(str(NOW.day)\
-        +"/"+str(NOW.month)+"/"+str(NOW.year)))
-entry2 = DiaryEntry(entryList=mydiaryobject.userEntries, \
-        data='this is my second entry', currentTime="".join(str(NOW.day)\
-        +"/"+str(NOW.month)+"/"+str(NOW.year)))
+@app.errorhandler(400)
+def bad_request(error):
+    """ error handler gives more friendly errors """
+    return make_response(jsonify({'error': 'Bad request, \
+                please review your input data'}), 400)
+
+my_diary_object = mydiary.MyDiary()
+gordonbalaaka = mydiary.User("Gordon Balaaka", \
+                "balaakagordon@gmail.com", \
+                "password", my_diary_object)
+seconduser = mydiary.User("Peter Crouch", \
+                "petercrouch@gmail.com", "password", my_diary_object)
+jamesbond = mydiary.User("James Bond", "007.amesbond@gmail.com", \
+                "bondjamesbond", my_diary_object)
+my_diary_object.login("balaakagordon@gmail.com", "password")
+entry1 = DiaryEntry(entry_list=my_diary_object.user_entries, \
+                data='this is my first entry', \
+                current_time="".join(str(NOW.day)+"/"\
+                +str(NOW.month)+"/"+str(NOW.year)))
+entry2 = DiaryEntry(entry_list=my_diary_object.user_entries, \
+                data='this is my second entry', \
+                current_time="".join(str(NOW.day)+"/"\
+                +str(NOW.month)+"/"+str(NOW.year)))
 
 
 if __name__ == '__main__':
