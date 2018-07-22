@@ -7,9 +7,19 @@ import pytest
 import unittest
 
 
-
 class Test_apis(unittest.TestCase):
     """ This class holds all api tests  """
+    def test_index(self):
+        tester = app.test_client(self)
+        response = tester.get('http://localhost:5000/login', content_type='html/text')
+        self.assertEqual(response.status_code, 200)
+
+    def test_login_page_loads(self):
+        """ Ensure that login page loads correctly """
+        tester = app.test_client(self)
+        response = tester.get('/login', content_type='html/text')
+        self.assertTrue('LogIn' in response.data)
+        self.assertEqual(response.status_code, 200)
    
     def test_get_one_entry_data(self):
         """ a test for the data returned by the get method and an index """
@@ -56,6 +66,7 @@ class Test_apis(unittest.TestCase):
                     content_type='application/json')
         response2 = tester.get('http://localhost:5000/home/api/v1/entries', \
                     content_type='application/json')
+        self.assertEqual(response1.status_code, 200)
         self.assertIn('New entry data for post test', response2.data)
 
 
@@ -93,6 +104,8 @@ class Test_apis(unittest.TestCase):
                 response3 = tester.get('http://localhost:5000/home/api/v1/entries', \
                             content_type='application/json')
                 self.assertEqual(response.status_code, 200)
+                self.assertEqual(response2.status_code, 200)
+                self.assertEqual(response3.status_code, 200)
 
     def test_delete_entry_data(self):
         """ a test for the data returned when an entry is deleted """

@@ -7,6 +7,8 @@
   "test_mydiary.py::Test_apis::test_get_all_entries_status_code", 
   "test_mydiary.py::Test_apis::test_get_one_entry_data", 
   "test_mydiary.py::Test_apis::test_get_one_entry_status_code", 
+  "test_mydiary.py::Test_apis::test_index", 
+  "test_mydiary.py::Test_apis::test_login_page_loads", 
   "test_mydiary.py::Test_apis::test_update_entry_data", 
   "test_mydiary.py::Test_apis::test_update_entry_status_code"
 ]

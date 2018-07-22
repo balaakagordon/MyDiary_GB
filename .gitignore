@@ -1,5 +1,7 @@
 venv
 venv2
-.vscode
+.vscode/
 MyDiary.code-workspace
 *.pyc
+__pycache__/
+.pytest_cache/

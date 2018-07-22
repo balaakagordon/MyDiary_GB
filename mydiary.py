@@ -119,18 +119,7 @@ class DiaryEntry:
 
 def main():
     pass
-    #my_diary_object = MyDiary()
-    #gordonbalaaka = User("Gordon Balaaka", "balaakagordon@gmail.com", \
-                    #"password", my_diary_object)
-    #seconduser = User("Peter Crouch", "petercrouch@gmail.com", \
-                    #"password", my_diary_object)
-    #jamesbond = User("James Bond", "007.amesbond@gmail.com", \
-                    #"bondjamesbond", my_diary_object)   
-    #my_diary_object.login("balaakagordon@gmail.com","password")
-    #entry1 = DiaryEntry(entry_list=my_diary_object.user_entries, \
-                    #data='this is my first entry', current_time=now)
-    #entry2 = DiaryEntry(entry_list=my_diary_object.user_entries, \
-                    #data='this is my second entry', current_time=now)
+    
 
 if __name__ == '__main__':
     main()
