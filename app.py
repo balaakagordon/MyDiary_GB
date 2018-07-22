@@ -21,18 +21,33 @@ NOW = datetime.datetime.now()
 def welcome():
     return render_template('index.html')
 
+""" this route links to the registration page """
+@app.route('/registration')
+def registration():
+    return render_template('registration.html')
+
 """ this route links to the home page """
 @app.route('/home')
 def home():
-    return render_template('index.html')
+    return render_template('home.html')
+
+""" this route links to the entry edit page """
+@app.route('/edit')
+def edit():
+    return render_template('edit.html')
+
+""" this route links to the user's profile """
+@app.route('/profile')
+def profile():
+    return render_template('profile.html')
 
 """ this route links to the login page """
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
     if request.method == 'POST':
-        if (request.form['username'] != 'admin') or \
-            request.form['password'] != 'admin':
+        if (request.form['email'] != my_diary_object.current_user.email) or \
+            request.form['password'] != my_diary_object.current_user.password:
             error = "Invalid Credentials"
         else:
             flash('You were logged in.')
