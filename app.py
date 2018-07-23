@@ -68,11 +68,12 @@ def get_entry(diary_entry_id):
     diary_entry_list = [entry for entry in \
                 my_diary_object.user_entries.entry_list if \
                 entry.entry_id == diary_entry_id]
-    entry = {'id':diary_entry_list[0].entry_id, \
-                'entrydata':diary_entry_list[0].data, \
-                'datecreated':diary_entry_list[0].created}
     if diary_entry_list == []:
-        abort(404)
+        return jsonify({'error': 'Bad request, that ID does not exist.'})
+    else:
+        entry = {'id':diary_entry_list[0].entry_id, \
+            'entrydata':diary_entry_list[0].data, \
+            'datecreated':diary_entry_list[0].created}
     return jsonify({'entry':entry})
 
 """ this route returns all diary entries """
@@ -102,11 +103,17 @@ def create_entry():
                 data=request.json.get('entrydata', ""), \
                 current_time="".join(str(NOW.day)+"/"+str(NOW.month)\
                 +"/"+str(NOW.year)))
-    entry = {
-        'id': new_entry.entry_id,
-        'entrydata':new_entry.data,
-        'datecreated':new_entry.created
-    }
+    entry_list = [entry for entry in \
+                my_diary_object.user_entries.entry_list]
+    for i in range(len(entry_list)):
+        if new_entry.data == entry_list[i].data:
+            return jsonify({'error!': "this entry already exists"})
+        else:
+            entry = {
+                'id': new_entry.entry_id,
+                'entrydata':new_entry.data,
+                'datecreated':new_entry.created
+            }
     return jsonify({'entry': entry})
 
 """ this route updates a single diary entry """
