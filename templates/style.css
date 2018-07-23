@@ -3,7 +3,7 @@
 <style>
 h1 {
     font-size: 20px;
-    color:black;
+    color: black;
 }
 h2 {
     font-size: 36px;
@@ -20,6 +20,12 @@ img {
 .center {
     width: 75%
 }
+
+.header-logo {
+    width: 450px;
+    height: auto;
+}
+
 input[type=text], select {
     width: 100%;
     padding: 12px 20px;
@@ -151,6 +157,7 @@ tr:hover {
     width: 76%;
     height: 400px;
     overflow: scroll;
+    margin-bottom: 20px;
 }
 .container-profile {
     position: relative;
