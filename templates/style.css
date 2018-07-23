@@ -4,11 +4,13 @@
 h1 {
     font-size: 20px;
     color:black;
+    text-align: center;
 }
 
 h2 {
     font-size: 36px;
     font-family: Bradley Hand, cursive;
+    text-align: center;
 }
 
 h3 {
@@ -19,11 +21,74 @@ img {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
 
+#page {
+   height:100%;
+}
+
+#header {
+   position: absolute;
+   left: 0;
+   top: 0;
+   width: 100%;
+   background-color: black;
+   color: #A1E766;
+   text-align: center;
+}
+
+.header {
+   position: absolute;
+   left: 0;
+   top: 0;
+   width: 100%;
+   background-color: black;
+   color: #A1E766;
+   text-align: center;
+}
+
+.page-header {
+    display: block;
+    height: 50px;
+    padding: 20px 0px 50px 0px;
+}
+
+body {
+   margin:0;
+   padding:0;
+   height:100%;
+}
+
+#body {
+    padding:10px;
+    padding-bottom:70px;
+}
+
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: black;
+   color: #A1E766;
+   text-align: center;
 }
 
 .center {
-    width: 75%
+    width: 75%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.welcome-logo {
+    width: 450px;
+    height: auto;
+}
+
+.page-logo {
+    width: 300px;
+    height: auto;
 }
 
 input[type=text], select {
@@ -155,43 +220,44 @@ tr:hover {
     position: relative;
     background-color: white;
     width: 800px;
-    position: relative;
-    top: 250px;
+    top: 150px;
+    bottom: 200px;
+    padding: 50px 70px 55px 70px;
+}
+
+#registration {
+    height: 350px;
+}
+
+#login {
+    height: 250px;
 }
 
 .container-welcome {
-    width: 85%;
+    opacity: 0.98;
+    width: 65%;
     position: relative;
-    top: 220px;
+    top: 180px;
     background-color: black;
-    height: 400px;
+    padding: 150px 70px 150px 70px;
 
 }
 
 .container-home {
     position: relative;
-    top: 220px;
+    top: 150px;
     background-color: white;
-    width: 76%;
+    width: 75%;
     height: 400px;
     overflow: scroll;
 }
 
 .container-profile {
     position: relative;
-    top: 50px;
+    top: 180px;
     background-color: white;
     width: 50%;
     height: 400px;
-}
-
-.container-button {
-    position: absolute;
-    left: 0px;
-    bottom: 50px;
-    width: 90%;
-    height: 100px;
-    padding: 25px 70px 25px 70px;
 }
 
 .container-entry {
@@ -209,6 +275,26 @@ tr:hover {
     height: 400px;
     padding: 25px 70px 25px 70px;
     overflow: scroll;
+}
+
+.container-button {
+    width: 90%;
+    padding: 25px 70px 25px 70px;
+}
+
+#app-button {
+    left: 0px;
+    position: relative;
+    bottom: 95px;
+    height: 20px;
+    margin-top: 260px;
+}
+
+#login-button {
+    position: fixed;
+    bottom: 115px;
+    height: 20px;
+    margin-top: 260px;
 }
 
 .col {
@@ -247,24 +333,16 @@ tr:hover {
     clear: both;
 }
 
-.header {
-   position: absolute;
-   left: 0;
-   top: 0;
-   width: 100%;
-   background-color: black;
-   color: #A1E766;
-   text-align: center;
+.mydiary {
+    display: block;
+    height: 50px;
+    padding: 20px 0px 50px 0px;
 }
 
-.footer {
-   position: fixed;
-   left: 0;
-   bottom: 0;
-   width: 100%;
-   background-color: black;
-   color: #A1E766;
-   text-align: center;
+.welcome-header {
+    display: block;
+    height: 100px;
+    padding: 20px 0px 50px 0px;
 }
 
 /* width */
