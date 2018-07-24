@@ -1,7 +1,6 @@
 language: python
 python:
   - "2.7"
-sudo: required
 virtualenv:
   system_site_packages: True
  install:
@@ -10,6 +9,6 @@ virtualenv:
   - pip install coveralls
   - pip install coverage
 script:
-  - pytest
+  - py.test --cov-report term --cov=. tests/test_mydiary.py
 after_success:
   - coveralls
