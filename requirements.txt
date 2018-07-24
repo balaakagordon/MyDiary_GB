@@ -15,7 +15,6 @@ Flask==1.0.2
 Flask-RESTful==0.3.6
 foreman==0.9.7
 funcsigs==1.0.2
-futures==3.2.0
 gunicorn==19.9.0
 idna==2.7
 ipaddress==1.0.22
