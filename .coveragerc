@@ -7,3 +7,14 @@ omit =
     */markupsafe/*
     */venv/*
     */.vscode/*
+
+py.test --cov-config .coveragerc
+        --cov=MyDiary_GB
+        MyDiary_GB/tests/
+
+[run]
+branch = true
+include = */scrapy/*
+omit =
+    tests/*
+    scrapy/xlib/*
