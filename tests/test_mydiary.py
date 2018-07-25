@@ -3,7 +3,6 @@ This module contains the tests for the apis
 """
 
 from app import app
-import pytest
 import unittest
 
 

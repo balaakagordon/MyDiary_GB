@@ -5,8 +5,8 @@ virtualenv:
   system_site_packages: True
 install:
   - pip install -r requirements.txt
-  - pip install pytest
+  - pip install nose
 script:
-  - pytest
+  - nosetests —with coverage —cover-test —cover-package=(test folder)
 after_success:
   - coveralls
