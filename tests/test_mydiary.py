@@ -18,35 +18,35 @@ class Test_apis(unittest.TestCase):
         """ Ensure that login page loads correctly """
         tester = app.test_client(self)
         response = tester.get('/login', content_type='html/text')
-        self.assertTrue('LogIn' in response.data)
+        self.assertTrue('LogIn' in str(response.data))
         self.assertEqual(response.status_code, 200)
 
     def test_registration_page_loads(self):
         """ Ensure that registration page loads correctly """
         tester = app.test_client(self)
         response = tester.get('/registration', content_type='html/text')
-        self.assertTrue('PleaseRegister' in response.data)
+        self.assertTrue('PleaseRegister' in str(response.data))
         self.assertEqual(response.status_code, 200)
 
     def test_entry_edit_page_loads(self):
         """ Ensure that entry editing page loads correctly """
         tester = app.test_client(self)
         response = tester.get('/edit', content_type='html/text')
-        self.assertTrue('This is the first diary entry' in response.data)
+        self.assertTrue('This is the first diary entry' in str(response.data))
         self.assertEqual(response.status_code, 200)
 
     def test_home_page_loads(self):
         """ Ensure that home page loads correctly """
         tester = app.test_client(self)
         response = tester.get('/home', content_type='html/text')
-        self.assertTrue('MyThoughts' in response.data)
+        self.assertTrue('MyThoughts' in str(response.data))
         self.assertEqual(response.status_code, 200)
 
     def test_profile_page_loads(self):
         """ Ensure that user profile loads correctly """
         tester = app.test_client(self)
         response = tester.get('/profile', content_type='html/text')
-        self.assertTrue('All entries' in response.data)
+        self.assertTrue('All entries' in str(response.data))
         self.assertEqual(response.status_code, 200)
 
     def test_get_one_entry_data(self):
@@ -54,7 +54,7 @@ class Test_apis(unittest.TestCase):
         tester = app.test_client(self)
         response = tester.get('http://localhost:5000/home/api/v1/entries/2', \
                     content_type='application/json')
-        self.assertIn('this is my second entry', response.data)
+        self.assertIn('this is my second entry', str(response.data))
 
     def test_get_one_entry_status_code(self):
         """ a test for the status code returned by the get method and an index """
@@ -68,8 +68,8 @@ class Test_apis(unittest.TestCase):
         tester = app.test_client(self)
         response = tester.get('http://localhost:5000/home/api/v1/entries', \
                     content_type='application/json')
-        self.assertIn('this is my first entry', response.data)
-        self.assertIn('this is my second entry', response.data)
+        self.assertIn('this is my first entry', str(response.data))
+        self.assertIn('this is my second entry', str(response.data))
 
     def test_get_all_entries_status_code(self):
         """ a test for the status code returned by the get method and no entry index """
@@ -95,7 +95,7 @@ class Test_apis(unittest.TestCase):
         response2 = tester.get('http://localhost:5000/home/api/v1/entries', \
                     content_type='application/json')
         self.assertEqual(response1.status_code, 200)
-        self.assertIn('New entry data for post test', response2.data)
+        self.assertIn('New entry data for post test', str(response2.data))
 
 
     def test_update_entry_status_code(self):
@@ -114,7 +114,7 @@ class Test_apis(unittest.TestCase):
         response = tester.put('http://localhost:5000/home/api/v1/entries/1', \
                     data='{"entrydata":"New entry data for put test"}', \
                     content_type='application/json')
-        self.assertIn('New entry data for put test', response.data)
+        self.assertIn('New entry data for put test', str(response.data))
 
     def test_delete_entry_status_code(self):
         """ a test for the status code returned when an entry is deleted """
@@ -123,7 +123,7 @@ class Test_apis(unittest.TestCase):
                     data='{"entrydata":"Delete test"}', content_type='application/json')
         response1 = tester.get('http://localhost:5000/home/api/v1/entries', \
                     content_type='application/json')
-        self.assertIn('Delete test', response1.data)
+        self.assertIn('Delete test', str(response1.data))
 
         for entry in response1.json[0]["entrylist"]:
             if "Delete test" in entry["entrydata"]:
@@ -142,7 +142,7 @@ class Test_apis(unittest.TestCase):
                     data='{"entrydata":"Delete test"}', content_type='application/json')
         response1 = tester.get('http://localhost:5000/home/api/v1/entries', \
                     content_type='application/json')
-        self.assertIn('Delete test', response1.data)
+        self.assertIn('Delete test', str(response1.data))
 
         for entry in response1.json[0]["entrylist"]:
             if "Delete test" in entry["entrydata"]:
@@ -150,7 +150,7 @@ class Test_apis(unittest.TestCase):
                             +str(entry["id"]), content_type='application/json')
                 response3 = tester.get('http://localhost:5000/home/api/v1/entries', \
                             content_type='application/json')
-                self.assertNotIn('Delete test', response3.data)
+                self.assertNotIn('Delete test', str(response3.data))
 
 
 if __name__ == '__main__':

@@ -1,9 +1,11 @@
 language: python
 python:
-  - "2.7"
+  - "3.6.5"
 cache: pip
 install:
   - pip install -r requirements.txt
+  - pip install coveralls
+  - pip install coverage
   - pip install nose
 script:
   - nosetests --with-coverage --cover-package=app

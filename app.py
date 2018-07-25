@@ -99,12 +99,12 @@ def create_entry():
     if not request.json or not 'entrydata' in request.json:
         abort(400)
     entry = my_diary_object.user_entries.createEntry
+    entry_list = [entry for entry in \
+                my_diary_object.user_entries.entry_list]
     new_entry = DiaryEntry(entry_list=my_diary_object.user_entries, \
                 data=request.json.get('entrydata', ""), \
                 current_time="".join(str(NOW.day)+"/"+str(NOW.month)\
                 +"/"+str(NOW.year)))
-    entry_list = [entry for entry in \
-                my_diary_object.user_entries.entry_list]
     for i in range(len(entry_list)):
         if new_entry.data == entry_list[i].data:
             return jsonify({'error!': "this entry already exists"})
@@ -128,8 +128,8 @@ def update_task(diary_entry_id):
         abort(404)
     if not request.json:
         abort(400)
-    if 'entrydata' in request.json and \
-                type(request.json['entrydata']) is not unicode:
+    #if 'entrydata' in request.json and \
+                #type(request.json['entrydata']) is not unicode:
         abort(400)
     if 'date' in request.json and type(request.json['date']) is not str:
         abort(400)
