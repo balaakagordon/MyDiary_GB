@@ -6,8 +6,8 @@ install:
   - pip install -r requirements.txt
   - pip install coveralls
   - pip install coverage
-  - pip install nose
+  - pip install pytest pytest-cov
 script:
-  - nosetests --with-coverage
+  - pytest --cov=app/
 after_success:
   - coveralls
