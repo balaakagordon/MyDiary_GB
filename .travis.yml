@@ -10,6 +10,6 @@ install:
   - pip install coverage
   - pip install nose
 script:
-  - nosetests --with-coverage --cover-tests --cover-package=tests
+  - nosetests --with-coverage --cover-tests
 after_success:
   - coveralls
