@@ -7,8 +7,8 @@ from flask import Flask, render_template, request, \
     flash, redirect
 from flask_restful import Resource, Api
 import datetime
-import mydiaryapp.mydiary
-from mydiaryapp.mydiary import DiaryEntry
+import mydiary
+from mydiary import DiaryEntry
 
 
 app = Flask(__name__)
@@ -116,13 +116,13 @@ def bad_request(error):
     return make_response(jsonify({'error': 'Bad request, \
                 please review your input data'}), 400)
 
-my_diary_object = mydiaryapp.mydiary.MyDiary()
-gordonbalaaka = mydiaryapp.mydiary.User("Gordon Balaaka", \
+my_diary_object = mydiary.MyDiary()
+gordonbalaaka = mydiary.User("Gordon Balaaka", \
                 "balaakagordon@gmail.com", \
                 "password", my_diary_object)
-seconduser = mydiaryapp.mydiary.User("Peter Crouch", \
+seconduser = mydiary.User("Peter Crouch", \
                 "petercrouch@gmail.com", "password", my_diary_object)
-jamesbond = mydiaryapp.mydiary.User("James Bond", "007.amesbond@gmail.com", \
+jamesbond = mydiary.User("James Bond", "007.amesbond@gmail.com", \
                 "bondjamesbond", my_diary_object)
 my_diary_object.login("balaakagordon@gmail.com", "password")
 entry1 = DiaryEntry(entry_list=my_diary_object.user_entries, \
