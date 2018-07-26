@@ -2,7 +2,7 @@
 This module contains the tests for the apis
 """
 
-from mydiaryapp.app import app
+from ..mydiaryapp.app import app
 import unittest
 
 
