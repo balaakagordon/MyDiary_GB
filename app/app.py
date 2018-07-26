@@ -15,52 +15,6 @@ app = Flask(__name__)
 api = Api(app)
 NOW = datetime.datetime.now()
 
-
-""" this route links to the welcome page """
-@app.route('/')
-def welcome():
-    return render_template('index.html')
-
-""" this route links to the registration page """
-@app.route('/registration')
-def registration():
-    return render_template('registration.html')
-
-""" this route links to the home page """
-@app.route('/home')
-def home():
-    return render_template('home.html')
-
-""" this route links to the entry edit page """
-@app.route('/edit')
-def edit():
-    return render_template('edit.html')
-
-""" this route links to the user's profile """
-@app.route('/profile')
-def profile():
-    return render_template('profile.html')
-
-""" this route links to the login page """
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    error = None
-    if request.method == 'POST':
-        if (request.form['email'] != my_diary_object.current_user.email) or \
-            request.form['password'] != my_diary_object.current_user.password:
-            error = "Invalid Credentials"
-        else:
-            flash('You were logged in.')
-            return redirect(url_for('home'))
-    return render_template('login.html', error=error)
-
-""" this route logs the user out """
-@app.route('/logout')
-def logout():
-    flash('You were logged out.')
-    return redirect(url_for('welcome'))
-
-
 """ this route returns a single diary entry """
 @app.route('/home/api/v1/entries/<int:diary_entry_id>', methods=['GET'])
 def get_entry(diary_entry_id):

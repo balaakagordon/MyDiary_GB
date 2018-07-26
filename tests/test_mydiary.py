@@ -2,52 +2,12 @@
 This module contains the tests for the apis
 """
 
-from app import app
+from app.app import app
 import unittest
 
 
 class Test_apis(unittest.TestCase):
     """ This class holds all api tests  """
-    def test_index(self):
-        """ Ensure that welcome page loads correctly """
-        tester = app.test_client(self)
-        response = tester.get('http://localhost:5000/login', content_type='html/text')
-        self.assertEqual(response.status_code, 200)
-
-    def test_login_page_loads(self):
-        """ Ensure that login page loads correctly """
-        tester = app.test_client(self)
-        response = tester.get('/login', content_type='html/text')
-        self.assertTrue('LogIn' in str(response.data))
-        self.assertEqual(response.status_code, 200)
-
-    def test_registration_page_loads(self):
-        """ Ensure that registration page loads correctly """
-        tester = app.test_client(self)
-        response = tester.get('/registration', content_type='html/text')
-        self.assertTrue('PleaseRegister' in str(response.data))
-        self.assertEqual(response.status_code, 200)
-
-    def test_entry_edit_page_loads(self):
-        """ Ensure that entry editing page loads correctly """
-        tester = app.test_client(self)
-        response = tester.get('/edit', content_type='html/text')
-        self.assertTrue('This is the first diary entry' in str(response.data))
-        self.assertEqual(response.status_code, 200)
-
-    def test_home_page_loads(self):
-        """ Ensure that home page loads correctly """
-        tester = app.test_client(self)
-        response = tester.get('/home', content_type='html/text')
-        self.assertTrue('MyThoughts' in str(response.data))
-        self.assertEqual(response.status_code, 200)
-
-    def test_profile_page_loads(self):
-        """ Ensure that user profile loads correctly """
-        tester = app.test_client(self)
-        response = tester.get('/profile', content_type='html/text')
-        self.assertTrue('All entries' in str(response.data))
-        self.assertEqual(response.status_code, 200)
 
     def test_get_one_entry_data(self):
         """ a test for the data returned by the get method and an index """
