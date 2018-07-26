@@ -2,7 +2,7 @@
 This module contains the tests for the apis
 """
 
-from ../app import app
+from app import app
 import unittest
 
 
