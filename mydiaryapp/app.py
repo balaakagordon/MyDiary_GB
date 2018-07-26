@@ -8,7 +8,7 @@ from flask import Flask, render_template, request, \
 from flask_restful import Resource, Api
 import datetime
 import mydiary
-from mydiary import DiaryEntry
+#from mydiary import DiaryEntry
 
 
 app = Flask(__name__)
@@ -55,7 +55,7 @@ def create_entry():
     entry = my_diary_object.user_entries.createEntry
     entry_list = [entry for entry in \
                 my_diary_object.user_entries.entry_list]
-    new_entry = DiaryEntry(entry_list=my_diary_object.user_entries, \
+    new_entry = mydiary.DiaryEntry(entry_list=my_diary_object.user_entries, \
                 data=request.json.get('entrydata', ""), \
                 current_time="".join(str(NOW.day)+"/"+str(NOW.month)\
                 +"/"+str(NOW.year)))
@@ -125,11 +125,11 @@ seconduser = mydiary.User("Peter Crouch", \
 jamesbond = mydiary.User("James Bond", "007.amesbond@gmail.com", \
                 "bondjamesbond", my_diary_object)
 my_diary_object.login("balaakagordon@gmail.com", "password")
-entry1 = DiaryEntry(entry_list=my_diary_object.user_entries, \
+entry1 = mydiary.DiaryEntry(entry_list=my_diary_object.user_entries, \
                 data='this is my first entry', \
                 current_time="".join(str(NOW.day)+"/"\
                 +str(NOW.month)+"/"+str(NOW.year)))
-entry2 = DiaryEntry(entry_list=my_diary_object.user_entries, \
+entry2 = mydiary.DiaryEntry(entry_list=my_diary_object.user_entries, \
                 data='this is my second entry', \
                 current_time="".join(str(NOW.day)+"/"\
                 +str(NOW.month)+"/"+str(NOW.year)))
