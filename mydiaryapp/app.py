@@ -50,8 +50,8 @@ def get_all_entries():
 @app.route('/home/api/v1/entries', methods=['POST'])
 def create_entry():
     """ this method creates a new entry """
-    if not request.json or not 'entrydata' in request.json:
-        abort(400)
+    #if not request.json or not 'entrydata' in request.json:
+        #abort(400)
     entry = my_diary_object.user_entries.createEntry
     entry_list = [entry for entry in \
                 my_diary_object.user_entries.entry_list]
