@@ -7,6 +7,7 @@ from flask import Flask, render_template, request, \
     flash, redirect
 from flask_restful import Resource, Api
 import datetime
+import mydiary
 from mydiary import DiaryEntry
 
 
