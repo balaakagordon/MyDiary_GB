@@ -6,6 +6,7 @@ omit =
     */flask/*
     */markupsafe/*
     */venv/*
+    */venv2/*
     */.vscode/*
 
 [run]
