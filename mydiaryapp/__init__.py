@@ -1,5 +1,5 @@
-from flask import Flask
-import mydiary
+#from flask import Flask
+#import mydiary
 
-app = Flask(__name__)
+#app = Flask(__name__)
 

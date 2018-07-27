@@ -7,8 +7,8 @@ from flask import Flask, render_template, request, \
     flash, redirect
 from flask_restful import Resource, Api
 import datetime
-from mydiaryapp import mydiary
-from mydiary import DiaryEntry
+#import mydiary
+from mydiary import DiaryEntry, User, MyDiary
 
 
 app = Flask(__name__)
@@ -55,7 +55,7 @@ def create_entry():
     entry = my_diary_object.user_entries.createEntry
     entry_list = [entry for entry in \
                 my_diary_object.user_entries.entry_list]
-    new_entry = mydiary.DiaryEntry(entry_list=my_diary_object.user_entries, \
+    new_entry = DiaryEntry(entry_list=my_diary_object.user_entries, \
                 data=request.json.get('entrydata', ""), \
                 current_time="".join(str(NOW.day)+"/"+str(NOW.month)\
                 +"/"+str(NOW.year)))
@@ -116,20 +116,20 @@ def bad_request(error):
     return make_response(jsonify({'error': 'Bad request, \
                 please review your input data'}), 400)
 
-my_diary_object = mydiary.MyDiary()
-gordonbalaaka = mydiary.User("Gordon Balaaka", \
+my_diary_object = MyDiary()
+gordonbalaaka = User("Gordon Balaaka", \
                 "balaakagordon@gmail.com", \
                 "password", my_diary_object)
-seconduser = mydiary.User("Peter Crouch", \
+seconduser = User("Peter Crouch", \
                 "petercrouch@gmail.com", "password", my_diary_object)
-jamesbond = mydiary.User("James Bond", "007.amesbond@gmail.com", \
+jamesbond = User("James Bond", "007.amesbond@gmail.com", \
                 "bondjamesbond", my_diary_object)
 my_diary_object.login("balaakagordon@gmail.com", "password")
-entry1 = mydiary.DiaryEntry(entry_list=my_diary_object.user_entries, \
+entry1 = DiaryEntry(entry_list=my_diary_object.user_entries, \
                 data='this is my first entry', \
                 current_time="".join(str(NOW.day)+"/"\
                 +str(NOW.month)+"/"+str(NOW.year)))
-entry2 = mydiary.DiaryEntry(entry_list=my_diary_object.user_entries, \
+entry2 = DiaryEntry(entry_list=my_diary_object.user_entries, \
                 data='this is my second entry', \
                 current_time="".join(str(NOW.day)+"/"\
                 +str(NOW.month)+"/"+str(NOW.year)))
