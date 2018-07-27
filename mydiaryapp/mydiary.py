@@ -116,10 +116,3 @@ class DiaryEntry:
         self. modified = current_time
         self.entry_list.modifyEntry(self)
 
-
-def main():
-    pass
-    
-
-if __name__ == '__main__':
-    main()
