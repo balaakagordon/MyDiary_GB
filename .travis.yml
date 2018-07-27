@@ -3,14 +3,14 @@ python:
   - "3.4"
 cache: pip
 before_install:
-  - "pip install -U pip"
-  - "python setup.py install"
+  - pip install -U pip
+  - python setup.py install
 install:
   - pip install -r requirements.txt
   - pip install coveralls
   - pip install coverage
   - pip install nose
 script:
-  - nosetests
+  - nosetests --with-coverage --cover-package app
 after_success:
   - coveralls
