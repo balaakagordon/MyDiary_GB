@@ -32,7 +32,8 @@ img {
    left: 0;
    top: 0;
    width: 100%;
-   background-color: ;
+   background-color: black;
+   color: #A1E766;
    text-align: center;
 }
 
@@ -42,6 +43,7 @@ img {
    top: 0;
    width: 100%;
    background-color: black;
+   color: #A1E766;
    text-align: center;
 }
 
