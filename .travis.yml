@@ -11,6 +11,6 @@ install:
   - pip install coverage
   - pip install nose
 script:
-  - nosetests
+  - nosetests --with-coverage --cover-package=app
 after_success:
   - coveralls
