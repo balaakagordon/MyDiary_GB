@@ -11,6 +11,6 @@ install:
   - pip install coverage
   - pip install nose
 script:
-  - nosetests --with-coverage --cover-package=app
+  - nosetests --with-coverage --cover-package=mydiaryapp
 after_success:
   - coveralls
