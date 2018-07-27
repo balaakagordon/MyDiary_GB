@@ -1,0 +1,10 @@
+{
+	"folders": [
+		{
+			"path": "MyDiary_GB"
+		}
+	],
+	"settings": {
+		"python.pythonPath": "${workspaceFolder}/venv/bin/python"
+	}
+}
