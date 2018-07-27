@@ -7,13 +7,13 @@ from flask import Flask, render_template, request, \
     flash, redirect
 from flask_restful import Resource, Api
 import datetime
-#import mydiary
 from mydiaryapp.mydiary import DiaryEntry, User, MyDiary
 
 
 app = Flask(__name__)
 api = Api(app)
 NOW = datetime.datetime.now()
+
 
 """ this route returns a single diary entry """
 @app.route('/home/api/v1/entries/<int:diary_entry_id>', methods=['GET'])
