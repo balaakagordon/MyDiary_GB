@@ -8,7 +8,7 @@ from flask import Flask, render_template, request, \
 from flask_restful import Resource, Api
 import datetime
 import mydiary
-#from mydiary import DiaryEntry
+from mydiary import DiaryEntry
 
 
 app = Flask(__name__)
